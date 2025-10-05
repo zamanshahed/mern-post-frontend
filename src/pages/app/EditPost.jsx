@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPostDetails, updatePost } from "../../api/postApis";
 import SectionTitle from "../../components/SectionTitle";
 import CategoryDropdown from "./CategoryDropdown";
@@ -17,6 +17,7 @@ const EditPost = () => {
   const [postImageUpdateMode, setPostImageUpdateMode] = useState(false);
 
   const { isLoading, setIsLoading } = useGeneralStore();
+  const navigate = useNavigate();
 
   const fetchPostDetails = async (postId) => {
     setIsLoading(true);
@@ -46,8 +47,8 @@ const EditPost = () => {
         category: postCategory,
         body: postContent,
       });
-      console.log("Post updated:", response);
       setIsLoading(false);
+      navigate("/app/manage-posts");
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -83,11 +84,16 @@ const EditPost = () => {
               }}
               onRemove={() => fetchPostDetails(post_id)}
             />
-          ) : (
+          ) : postImage ? (
             <img
               src={postImage}
               className="w-full h-[300px] p-2 rounded-xl object-contain bg-black"
+              alt="post-cover-image"
             />
+          ) : (
+            <div className="w-full h-[300px] p-2 rounded-xl object-contain bg-black text-white flex items-center justify-center text-xl font-semibold">
+              Image not found
+            </div>
           )}
           <button
             type="button"

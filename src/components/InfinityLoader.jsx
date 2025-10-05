@@ -1,6 +1,6 @@
 import { DNA } from "react-loader-spinner";
 
-const InfinityLoader = ({ size = 100 }) => {
+const InfinityLoader = ({ size = 45 }) => {
   return (
     <div className="flex items-center justify-center gap-4 w-full p-5">
       <DNA

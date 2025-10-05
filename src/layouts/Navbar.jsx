@@ -15,11 +15,13 @@ const Navbar = () => {
       <div>
         {isPublicLayout && (
           <div className="flex items-center gap-5">
-            <img
-              src="/images/login-logo.svg"
-              alt="Newsx Logo"
-              className=" mx-auto"
-            />
+            <Link to="/">
+              <img
+                src="/images/login-logo.svg"
+                alt="Newsx Logo"
+                className=" mx-auto"
+              />
+            </Link>
             {user && (
               <Link
                 to="/app"

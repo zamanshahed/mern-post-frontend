@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       //PUBLIC ROUTES
       { index: true, element: <Home /> },
-      { path: "post/:slug", element: <Post /> },
+      { path: "post/:post_id", element: <Post /> },
     ],
   },
   {
