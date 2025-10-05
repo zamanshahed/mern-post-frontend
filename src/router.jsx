@@ -5,12 +5,14 @@ import AdminLayout from "./layouts/AdminLayout";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/app/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import { requireAuthLoader, requireRoleLoader } from "./lib/authLoaders";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
   {
     path: "/",
     element: <PublicLayout />,

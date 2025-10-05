@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-const Login = () => {
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log("Login clicked");
+const Register = () => {
+  const handleRegister = (event) => {
+    event.preventDefault();
+    console.log("Registering...");
   };
 
   return (
@@ -15,10 +15,21 @@ const Login = () => {
           className=" mx-auto"
         />
         <h3 className="text-xl pt-4 text-center">
-          Welcome Newsx, Please Log In
+          Welcome Newsx, Please Register
         </h3>
 
-        <form className="pt-8 flex flex-col gap-4" onSubmit={handleLogin}>
+        <form className="pt-8 flex flex-col gap-4" onSubmit={handleRegister}>
+          <div className="flex flex-col space-y-2 text-base font-normal">
+            <label htmlFor="name">Full Name</label>
+            <input
+              required
+              type="text"
+              id="name"
+              placeholder="Full Name"
+              className=" bg-[#E3E3E3] rounded-xl px-4 py-2 h-14"
+            />
+          </div>
+
           <div className="flex flex-col space-y-2 text-base font-normal">
             <label htmlFor="email">Email</label>
             <input
@@ -45,18 +56,18 @@ const Login = () => {
             type="submit"
             className="bg-[#6200EE] text-white text-base font-semibold px-4 py-2 h-14 rounded-xl cursor-pointer"
           >
-            Log In
+            Register
           </button>
         </form>
 
         <div className="pt-8">
           <p className="text-base font-normal text-center">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              to="/register"
+              to="/login"
               className="text-blue-500 underline font-semibold text-sm"
             >
-              Sign Up
+              Sign In
             </Link>
           </p>
         </div>
@@ -65,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
