@@ -68,12 +68,13 @@ const RecentPosts = ({ posts = [], sectionTitle = "", showSeeAll = false }) => {
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button
+                        <Link
+                          to={`/app/manage-posts/${row._id}`}
                           aria-label="edit"
                           className="inline-flex cursor-pointer items-center justify-center w-8 h-8 rounded-md border border-emerald-100 hover:bg-emerald-50 mr-2"
                         >
                           <FiEdit2 className="w-4 h-4 text-emerald-500" />
-                        </button>
+                        </Link>
                         <button
                           aria-label="delete"
                           className="inline-flex cursor-pointer items-center justify-center w-8 h-8 rounded-md border border-rose-100 hover:bg-rose-50"

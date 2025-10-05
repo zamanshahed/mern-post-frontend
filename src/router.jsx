@@ -11,6 +11,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import { requireAuthLoader, requireRoleLoader } from "./lib/authLoaders";
 import CreatePost from "./pages/app/CreatePost";
 import ManagePosts from "./pages/app/ManagePosts";
+import EditPost from "./pages/app/EditPost";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "create-post", element: <CreatePost /> },
       { path: "manage-posts", element: <ManagePosts /> },
+      { path: "manage-posts/:post_id", element: <EditPost /> },
     ],
   },
   {

@@ -7,14 +7,19 @@ import { timeAgo } from "../../utils/formatTimeAgo";
 import { countTodayPosts } from "../../utils/todaysPostCount";
 import DashCard from "./components/DashCard";
 import RecentPosts from "./RecentPosts";
+import useGeneralStore from "../../store/generalStore";
+import InfinityLoader from "../../components/InfinityLoader";
 
 const AppDashboard = () => {
   const [posts, setPosts] = useState([]);
+  const { isLoading, setIsLoading } = useGeneralStore();
 
   const fetchPosts = async () => {
+    setIsLoading(true);
     const data = await getAllPosts();
     console.log("all posts : ", data);
     setPosts(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -25,7 +30,7 @@ const AppDashboard = () => {
       <div className="grid grid-cols-3 gap-6">
         <DashCard
           label="Total Posts"
-          value={posts.length}
+          value={posts.length ? posts.length : isLoading ? "Loading..." : "-"}
           icon={
             <div className="p-2 bg-orange-100 rounded-xl border border-orange-200">
               <FiFileText className="w-5 h-5 text-orange-600 bg-orange-100" />
@@ -34,7 +39,13 @@ const AppDashboard = () => {
         />
         <DashCard
           label="Latest Post"
-          value={posts.length > 0 ? timeAgo(posts[0].createdAt) : "-"}
+          value={
+            posts.length > 0
+              ? timeAgo(posts[0].createdAt)
+              : isLoading
+                ? "Loading..."
+                : "-"
+          }
           icon={
             <div className="p-1 bg-blue-100 rounded-xl border border-blue-200">
               <MdOutlineFiberNew className="w-7 h-7 text-blue-600 bg-blue-100" />
@@ -43,7 +54,13 @@ const AppDashboard = () => {
         />
         <DashCard
           label="Today's Posts"
-          value={posts.length > 0 ? countTodayPosts(posts) : "-"}
+          value={
+            posts.length > 0
+              ? countTodayPosts(posts)
+              : isLoading
+                ? "Loading..."
+                : "-"
+          }
           icon={
             <div className="p-2 bg-emerald-100 rounded-xl border border-emerald-200">
               <BsCalendarWeek className="w-5 h-5 text-emerald-600 bg-emerald-100" />
@@ -52,6 +69,7 @@ const AppDashboard = () => {
         />
       </div>
       <div className="mt-8" />
+      {isLoading ? <InfinityLoader size={48} /> : null}
       {posts.length > 0 && (
         <RecentPosts posts={posts} sectionTitle="Recent Posts" showSeeAll />
       )}

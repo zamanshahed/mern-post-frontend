@@ -29,3 +29,29 @@ export const getAllPosts = async () => {
     throw error.response?.data || { message: "get posts failed" };
   }
 };
+
+/**
+ * Get post Details
+ */
+export const getPostDetails = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/blogs/${id}`);
+    return response.data;
+  } catch (error) {
+    // Optional: normalize error
+    throw error.response?.data || { message: "get post details failed" };
+  }
+};
+
+/**
+ * Update post API
+ */
+export const updatePost = async (id, data) => {
+  try {
+    const response = await axiosInstance.put(`/blogs/${id}`, data);
+    return response.data;
+  } catch (error) {
+    // Optional: normalize error
+    throw error.response?.data || { message: "update post failed" };
+  }
+};
