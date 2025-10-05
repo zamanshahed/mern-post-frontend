@@ -7,9 +7,16 @@ import api from "../api/api";
  */
 export async function requireAuthLoader({ request }) {
   try {
-    // request.url gives the full URL; use it for redirectTo
-    const resp = await api.get("/auth/me", { withCredentials: true }); // server must return 200 + user
-    return resp.data; // this becomes useLoaderData()
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      const pathname = new URL(request.url).pathname;
+      throw redirect(`/login?redirectTo=${encodeURIComponent(pathname)}`);
+    }
+
+    // Optional: validate token on server
+    const resp = await api.get("/auth/me"); // axiosInstance already adds Authorization header
+    return resp.data; // this becomes useLoaderData() in your protected route
   } catch (err) {
     const pathname = new URL(request.url).pathname;
     throw redirect(`/login?redirectTo=${encodeURIComponent(pathname)}`);
@@ -23,7 +30,8 @@ export function requireRoleLoader(role) {
   return async (args) => {
     const user = await requireAuthLoader(args);
     if (!user?.roles || !user.roles.includes(role)) {
-      throw Error({ message: "Forbidden" }, { status: 403 });
+      // Use redirect or throw Response for proper error page
+      throw new Response("Forbidden", { status: 403 });
     }
     return user;
   };

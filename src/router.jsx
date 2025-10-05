@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/app/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import { requireAuthLoader, requireRoleLoader } from "./lib/authLoaders";
+import CreatePost from "./pages/app/CreatePost";
+import ManagePosts from "./pages/app/ManagePosts";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
     children: [
       // LOGGED USER ROUTES
       { index: true, element: <Dashboard /> },
+      { path: "create-post", element: <CreatePost /> },
+      { path: "manage-posts", element: <ManagePosts /> },
     ],
   },
   {

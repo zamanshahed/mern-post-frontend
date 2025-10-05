@@ -1,9 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/authApis";
+import { useState } from "react";
 
 const Login = () => {
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Login clicked");
+    try {
+      const data = await login({ email, password });
+      console.log("Logged in:", data);
+      localStorage.setItem("token", data.token); // save JWT
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/app");
+    } catch (err) {
+      console.error("Login error:", err.message);
+    }
   };
 
   return (
@@ -27,6 +42,8 @@ const Login = () => {
               id="email"
               placeholder="Email"
               className=" bg-[#E3E3E3] rounded-xl px-4 py-2 h-14"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -38,6 +55,8 @@ const Login = () => {
               id="password"
               placeholder="Password"
               className=" bg-[#E3E3E3] rounded-xl px-4 py-2 h-14"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
