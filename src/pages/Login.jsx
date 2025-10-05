@@ -1,17 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/authApis";
 import { useState } from "react";
+import { useAuthStore } from "../store/authStore";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useAuthStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const data = await login({ email, password });
+      setUser(data.user);
       console.log("Logged in:", data);
       localStorage.setItem("token", data.token); // save JWT
       localStorage.setItem("user", JSON.stringify(data.user));

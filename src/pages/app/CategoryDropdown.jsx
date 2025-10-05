@@ -1,28 +1,5 @@
 import React from "react";
-
-const categories = [
-  ".NET",
-  "AI",
-  "Blockchain",
-  "Blog",
-  "Business",
-  "Data Engineering",
-  "DBI",
-  "Golang",
-  "Java",
-  "JavaScript",
-  "Mobile App Development",
-  "MVP",
-  "Personal",
-  "Programming & Development",
-  "Python",
-  "React",
-  "Software Development",
-  "SQL Server",
-  "Staff Augmentation",
-  "Technology",
-  "Web",
-];
+import { categories } from "../../lib/categories";
 
 const CategoryDropdown = ({ value, onChange, required = false }) => {
   return (

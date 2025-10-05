@@ -23,7 +23,6 @@ const router = createBrowserRouter([
       //PUBLIC ROUTES
       { index: true, element: <Home /> },
       { path: "post/:slug", element: <Post /> },
-      // { path: "login", element: <Login /> },
     ],
   },
   {
