@@ -10,7 +10,7 @@ import React, { useState, useRef, useEffect } from "react";
  *  - onRemove: fn() optional callback when image removed from preview
  */
 export default function ImageUploader({
-  apiKey = "7363c8b70e7c658f54a4491c0af7ead2",
+  apiKey = import.meta.env.VITE_IMG_BB_API_KEY,
   serverProxy,
   maxSizeMB = 32,
   onComplete,
@@ -115,7 +115,7 @@ export default function ImageUploader({
             }
           } else {
             reject(
-              new Error(`Proxy upload failed: ${xhr.status} ${xhr.statusText}`),
+              new Error(`Proxy upload failed: ${xhr.status} ${xhr.statusText}`)
             );
           }
         };
@@ -128,11 +128,13 @@ export default function ImageUploader({
       // Otherwise use ImgBB directly (key must be provided)
       if (!apiKey) {
         return reject(
-          new Error("No apiKey supplied and no serverProxy configured"),
+          new Error("No apiKey supplied and no serverProxy configured")
         );
       }
 
-      const url = `https://api.imgbb.com/1/upload?key=${encodeURIComponent(apiKey)}`;
+      const url = `https://api.imgbb.com/1/upload?key=${encodeURIComponent(
+        apiKey
+      )}`;
       const form = new FormData();
 
       // To use multipart/form-data we append the file directly; ImgBB accepts file in 'image'
@@ -254,7 +256,11 @@ export default function ImageUploader({
               {!result && (
                 <div className="mt-2">
                   <button
-                    className={`px-4 py-2 rounded-md text-white ${uploading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
+                    className={`px-4 py-2 rounded-md text-white ${
+                      uploading
+                        ? "bg-gray-400"
+                        : "bg-blue-600 hover:bg-blue-700"
+                    }`}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!uploading) handleUploadClick();

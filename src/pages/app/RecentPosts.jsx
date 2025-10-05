@@ -106,12 +106,15 @@ const RecentPosts = ({
                           <FiTrash2 className="w-4 h-4 text-rose-500" />
                         </button>
 
-                        <button
+                        <Link
+                          to={`/post/${row._id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           aria-label="view"
                           className="inline-flex cursor-pointer items-center justify-center w-8 h-8 rounded-md border border-blue-100 hover:bg-blue-50"
                         >
                           <FiExternalLink className="w-4 h-4 text-blue-500" />
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   ))
