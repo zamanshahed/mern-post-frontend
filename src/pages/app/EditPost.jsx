@@ -5,12 +5,16 @@ import SectionTitle from "../../components/SectionTitle";
 import CategoryDropdown from "./CategoryDropdown";
 import useGeneralStore from "../../store/generalStore";
 import InfinityLoader from "../../components/InfinityLoader";
+import ImageUploader from "../../components/ImageUploader";
 
 const EditPost = () => {
   const { post_id } = useParams();
   const [postTitle, setPostTitle] = useState("");
   const [postCategory, setPostCategory] = useState("");
   const [postContent, setPostContent] = useState("");
+  const [postImage, setPostImage] = useState("");
+
+  const [postImageUpdateMode, setPostImageUpdateMode] = useState(false);
 
   const { isLoading, setIsLoading } = useGeneralStore();
 
@@ -23,6 +27,7 @@ const EditPost = () => {
       setPostTitle(data.title);
       setPostCategory(data.category);
       setPostContent(data.content);
+      setPostImage(data.coverImage);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -71,6 +76,42 @@ const EditPost = () => {
         </div>
 
         <div className="flex flex-col space-y-2 text-base font-normal">
+          {postImageUpdateMode ? (
+            <ImageUploader
+              onComplete={(response) => {
+                setPostImage(response.data.display_url);
+              }}
+              onRemove={() => fetchPostDetails(post_id)}
+            />
+          ) : (
+            <img
+              src={postImage}
+              className="w-full h-[300px] p-2 rounded-xl object-contain bg-black"
+            />
+          )}
+          <button
+            type="button"
+            disabled={isLoading}
+            onClick={async () => {
+              if (!postImageUpdateMode) setPostImageUpdateMode(true);
+              else {
+                setIsLoading(true);
+                const response = await updatePost(post_id, {
+                  title: postTitle,
+                  content: postContent,
+                  category: postCategory,
+                  coverImage: postImage,
+                });
+                setPostImage(response.coverImage);
+                setIsLoading(false);
+                setPostImageUpdateMode(false);
+              }
+            }}
+            className="bg-blue-500 text-white text-lg font-semibold px-4 py-1.5 w-[220px] mx-auto rounded-xl cursor-pointer"
+          >
+            {!postImageUpdateMode ? "Change Post Image" : "Save Changes"}
+          </button>
+
           <label htmlFor="title">Title</label>
           <input
             required

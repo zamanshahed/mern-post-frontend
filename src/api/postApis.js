@@ -3,12 +3,13 @@ import axiosInstance from "./axiosInstance";
 /**
  * Create new post API
  */
-export const createPost = async (title, content, category) => {
+export const createPost = async (title, content, category, coverImage = "") => {
   try {
     const response = await axiosInstance.post("/blogs", {
       title,
       content,
       category,
+      coverImage,
     });
     return response.data;
   } catch (error) {

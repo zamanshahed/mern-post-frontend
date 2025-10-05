@@ -33,7 +33,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center">
-        <span className="text-lg font-semibold">
+        <span className="text-sm font-semibold">
           {user ? `Welcome, ${user.name}!` : "Welcome Guest!"}
         </span>
         {user ? (
@@ -43,7 +43,7 @@ const Navbar = () => {
               localStorage.setItem("token", null);
               localStorage.setItem("user", null);
             }}
-            className="bg-rose-500 text-white px-4 py-2 rounded-md ml-4 font-bold cursor-pointer"
+            className="border border-rose-500 text-rose-500 px-4 py-1.5 rounded-md ml-4 font-semibold cursor-pointer"
           >
             Logout
           </Link>
