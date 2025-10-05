@@ -71,7 +71,14 @@ const AppDashboard = () => {
       <div className="mt-8" />
       {isLoading ? <InfinityLoader size={48} /> : null}
       {posts.length > 0 && (
-        <RecentPosts posts={posts} sectionTitle="Recent Posts" showSeeAll />
+        <RecentPosts
+          posts={posts.length > 5 ? posts.slice(0, 5) : posts}
+          sectionTitle={posts.length > 5 ? "Recent 5 Posts" : "Recent Posts"}
+          showSeeAll
+          onDeleteSuccess={() => {
+            fetchPosts();
+          }}
+        />
       )}
     </div>
   );

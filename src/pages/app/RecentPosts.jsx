@@ -2,8 +2,31 @@ import { FiEdit2, FiExternalLink, FiTrash2 } from "react-icons/fi";
 import SectionTitle from "../../components/SectionTitle";
 import { formatDate } from "../../utils/formatDate";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Modal from "./components/Modal";
+import { deletePost } from "../../api/postApis";
+import useGeneralStore from "../../store/generalStore";
 
-const RecentPosts = ({ posts = [], sectionTitle = "", showSeeAll = false }) => {
+const RecentPosts = ({
+  posts = [],
+  sectionTitle = "",
+  showSeeAll = false,
+  onDeleteSuccess,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isLoading, setIsLoading } = useGeneralStore();
+
+  const handleDelete = async (postId) => {
+    setIsLoading(true);
+    const res = await deletePost(postId);
+    console.log("Delete res: ", res);
+    setIsModalOpen(false);
+    setIsLoading(false);
+    if (res.status === 200) {
+      onDeleteSuccess();
+    }
+  };
+
   return (
     <div className="max-w-full">
       <div className="bg-white shadow-sm rounded-lg border border-gray-100">
@@ -77,6 +100,7 @@ const RecentPosts = ({ posts = [], sectionTitle = "", showSeeAll = false }) => {
                         </Link>
                         <button
                           aria-label="delete"
+                          onClick={() => setIsModalOpen(row._id)}
                           className="inline-flex cursor-pointer items-center justify-center w-8 h-8 rounded-md border border-rose-100 hover:bg-rose-50"
                         >
                           <FiTrash2 className="w-4 h-4 text-rose-500" />
@@ -94,6 +118,17 @@ const RecentPosts = ({ posts = [], sectionTitle = "", showSeeAll = false }) => {
                 : "No data found"}
             </tbody>
           </table>
+
+          <Modal
+            showModal={isModalOpen}
+            setShowModal={setIsModalOpen}
+            title="Confirmation"
+            confirmBtnOnClick={() => {
+              handleDelete(isModalOpen);
+            }}
+          >
+            <div className="">Are you sure you want to delete this post?</div>
+          </Modal>
         </div>
 
         <div className="px-6 py-3 text-xs text-gray-400">&nbsp;</div>

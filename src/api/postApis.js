@@ -55,3 +55,16 @@ export const updatePost = async (id, data) => {
     throw error.response?.data || { message: "update post failed" };
   }
 };
+
+/**
+ * Update post API
+ */
+export const deletePost = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/blogs/${id}`);
+    return response;
+  } catch (error) {
+    // Optional: normalize error
+    throw error.response?.data || { message: "update post failed" };
+  }
+};

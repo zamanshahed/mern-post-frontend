@@ -25,7 +25,13 @@ const ManagePosts = () => {
       {isLoading ? (
         <InfinityLoader size={48} />
       ) : (
-        <RecentPosts sectionTitle="Manage Posts" posts={posts} />
+        <RecentPosts
+          sectionTitle="Manage Posts"
+          posts={posts}
+          onDeleteSuccess={() => {
+            fetchPosts();
+          }}
+        />
       )}
     </div>
   );
